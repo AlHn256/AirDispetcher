@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AirDispetcher.Model
+﻿namespace AirDispetcher.Data
 {
-    internal class Flight
+    public class Flight
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -19,24 +13,24 @@ namespace AirDispetcher.Model
         {
             Id = id;
             Name = name;
-            DepartureTime = ArrivalTime;
+            DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
             IsDelet = isDelet;
             PassengersList = new List<Passenger>();
         }
 
-        public Flight(int id, string name, DateTime departureTime, DateTime arrivalTime,bool isDelet,List<Passenger> passengersList)
+        public Flight(int id, string name, DateTime departureTime, DateTime arrivalTime, bool isDelet, List<Passenger> passengersList)
         {
             Id = id;
             Name = name;
-            DepartureTime = ArrivalTime;
+            DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
             IsDelet = isDelet;
             PassengersList = passengersList;
         }
 
 
-        public void AddPassengerList (List<Passenger> passengers)
+        public void AddPassengerList(List<Passenger> passengers)
         {
             PassengersList = passengers;
         }

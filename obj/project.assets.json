@@ -54,11 +54,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\C#\\WinForm\\AirDispetcher\\AirDispetcher.csproj",
+      "projectUniqueName": "D:\\CSH\\AirDispetcher\\AirDispetcher\\AirDispetcher.csproj",
       "projectName": "AirDispetcher",
-      "projectPath": "C:\\C#\\WinForm\\AirDispetcher\\AirDispetcher.csproj",
+      "projectPath": "D:\\CSH\\AirDispetcher\\AirDispetcher\\AirDispetcher.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\C#\\WinForm\\AirDispetcher\\obj\\",
+      "outputPath": "D:\\CSH\\AirDispetcher\\AirDispetcher\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

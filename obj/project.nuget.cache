@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Q/zhi7b53D7YRr9KLj9I1SjgnLSRjhnZBp8ZZ5Lb9mOMoDB7uuEsgFK8LDnI2mkJjf/TKnOIZ6jknDgimSFpww==",
+  "dgSpecHash": "0I2NI+8NgoX4njo6fe8r6qDAyl3Oo/a5n3vkzacoLM2f6ipxG5N2QGwWCO/ypguC4fvBqJD+GT6kZzTmK0zDRg==",
   "success": true,
-  "projectFilePath": "C:\\C#\\WinForm\\AirDispetcher\\AirDispetcher.csproj",
+  "projectFilePath": "D:\\CSH\\AirDispetcher\\AirDispetcher\\AirDispetcher.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\exceldatareader\\3.6.0\\exceldatareader.3.6.0.nupkg.sha512"
   ],

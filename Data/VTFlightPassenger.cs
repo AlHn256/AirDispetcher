@@ -1,4 +1,4 @@
-﻿namespace AirDispetcher.Model
+﻿namespace AirDispetcher.Data
 {
     internal class VTFlightPassenger
     {
