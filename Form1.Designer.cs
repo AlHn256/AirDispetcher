@@ -43,6 +43,12 @@
             AddPassenger = new Button();
             PassenerDataGridView = new DataGridView();
             RTB = new RichTextBox();
+            menuStrip1 = new MenuStrip();
+            Menu = new ToolStripMenuItem();
+            OpenFileToolStripMenuItem = new ToolStripMenuItem();
+            SaveDataMenuItem = new ToolStripMenuItem();
+            сохранитьКакToolStripMenuItem = new ToolStripMenuItem();
+            ExitMenuItem = new ToolStripMenuItem();
             TabControl.SuspendLayout();
             SearchTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SearchDataGridView).BeginInit();
@@ -50,6 +56,7 @@
             ((System.ComponentModel.ISupportInitialize)FlightDataGridView).BeginInit();
             PassengersTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PassenerDataGridView).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // TabControl
@@ -58,10 +65,10 @@
             TabControl.Controls.Add(SearchTabPage);
             TabControl.Controls.Add(FlightsTabPage);
             TabControl.Controls.Add(PassengersTabPage);
-            TabControl.Location = new Point(4, 1);
+            TabControl.Location = new Point(4, 27);
             TabControl.Name = "TabControl";
             TabControl.SelectedIndex = 0;
-            TabControl.Size = new Size(571, 470);
+            TabControl.Size = new Size(575, 472);
             TabControl.TabIndex = 0;
             // 
             // SearchTabPage
@@ -75,7 +82,7 @@
             SearchTabPage.Location = new Point(4, 24);
             SearchTabPage.Name = "SearchTabPage";
             SearchTabPage.Padding = new Padding(3);
-            SearchTabPage.Size = new Size(563, 442);
+            SearchTabPage.Size = new Size(567, 444);
             SearchTabPage.TabIndex = 0;
             SearchTabPage.Text = "Поиск пасажиров по номеру рейса";
             SearchTabPage.UseVisualStyleBackColor = true;
@@ -139,16 +146,16 @@
             FlightsTabPage.Location = new Point(4, 24);
             FlightsTabPage.Name = "FlightsTabPage";
             FlightsTabPage.Padding = new Padding(3);
-            FlightsTabPage.Size = new Size(563, 442);
+            FlightsTabPage.Size = new Size(567, 444);
             FlightsTabPage.TabIndex = 1;
             FlightsTabPage.Text = "Рейсы";
             FlightsTabPage.UseVisualStyleBackColor = true;
             // 
             // AddFlightButton
             // 
-            AddFlightButton.Location = new Point(6, 411);
+            AddFlightButton.Location = new Point(6, 408);
             AddFlightButton.Name = "AddFlightButton";
-            AddFlightButton.Size = new Size(153, 23);
+            AddFlightButton.Size = new Size(153, 30);
             AddFlightButton.TabIndex = 1;
             AddFlightButton.Text = "Добавить новый рейс";
             AddFlightButton.UseVisualStyleBackColor = true;
@@ -169,7 +176,7 @@
             PassengersTabPage.Controls.Add(PassenerDataGridView);
             PassengersTabPage.Location = new Point(4, 24);
             PassengersTabPage.Name = "PassengersTabPage";
-            PassengersTabPage.Size = new Size(563, 442);
+            PassengersTabPage.Size = new Size(567, 444);
             PassengersTabPage.TabIndex = 3;
             PassengersTabPage.Text = "Пассажиры";
             PassengersTabPage.UseVisualStyleBackColor = true;
@@ -177,7 +184,7 @@
             // AddPassenger
             // 
             AddPassenger.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            AddPassenger.Location = new Point(3, 409);
+            AddPassenger.Location = new Point(3, 411);
             AddPassenger.MaximumSize = new Size(200, 30);
             AddPassenger.MinimumSize = new Size(200, 29);
             AddPassenger.Name = "AddPassenger";
@@ -194,25 +201,70 @@
             PassenerDataGridView.Location = new Point(4, 3);
             PassenerDataGridView.Name = "PassenerDataGridView";
             PassenerDataGridView.RowTemplate.Height = 25;
-            PassenerDataGridView.Size = new Size(556, 400);
+            PassenerDataGridView.Size = new Size(560, 402);
             PassenerDataGridView.TabIndex = 0;
             // 
             // RTB
             // 
             RTB.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            RTB.Location = new Point(4, 477);
+            RTB.Location = new Point(4, 505);
             RTB.Name = "RTB";
-            RTB.Size = new Size(567, 36);
+            RTB.Size = new Size(571, 36);
             RTB.TabIndex = 1;
             RTB.Text = "";
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { Menu, ExitMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(582, 24);
+            menuStrip1.TabIndex = 2;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // Menu
+            // 
+            Menu.DropDownItems.AddRange(new ToolStripItem[] { OpenFileToolStripMenuItem, SaveDataMenuItem, сохранитьКакToolStripMenuItem });
+            Menu.Name = "Menu";
+            Menu.Size = new Size(53, 20);
+            Menu.Text = "Меню";
+            // 
+            // OpenFileToolStripMenuItem
+            // 
+            OpenFileToolStripMenuItem.Name = "OpenFileToolStripMenuItem";
+            OpenFileToolStripMenuItem.Size = new Size(180, 22);
+            OpenFileToolStripMenuItem.Text = "Открыть файл";
+            OpenFileToolStripMenuItem.Click += OpenFileToolStripMenuItem_Click;
+            // 
+            // SaveDataMenuItem
+            // 
+            SaveDataMenuItem.Name = "SaveDataMenuItem";
+            SaveDataMenuItem.Size = new Size(180, 22);
+            SaveDataMenuItem.Text = "Сохранить";
+            SaveDataMenuItem.Click += SaveDataMenuItem_Click;
+            // 
+            // сохранитьКакToolStripMenuItem
+            // 
+            сохранитьКакToolStripMenuItem.Name = "сохранитьКакToolStripMenuItem";
+            сохранитьКакToolStripMenuItem.Size = new Size(180, 22);
+            сохранитьКакToolStripMenuItem.Text = "Сохранить как";
+            // 
+            // ExitMenuItem
+            // 
+            ExitMenuItem.Name = "ExitMenuItem";
+            ExitMenuItem.Size = new Size(54, 20);
+            ExitMenuItem.Text = "Выйти";
+            ExitMenuItem.Click += ExitMenuItem_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(578, 517);
+            ClientSize = new Size(582, 545);
             Controls.Add(RTB);
             Controls.Add(TabControl);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
             FormClosing += Form1_FormClosing;
@@ -224,7 +276,10 @@
             ((System.ComponentModel.ISupportInitialize)FlightDataGridView).EndInit();
             PassengersTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)PassenerDataGridView).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -244,5 +299,11 @@
         private Button AddFlightButton;
         private DataGridView FlightDataGridView;
         private DateTimePicker FlightDateTimePicker;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem Menu;
+        private ToolStripMenuItem OpenFileToolStripMenuItem;
+        private ToolStripMenuItem SaveDataMenuItem;
+        private ToolStripMenuItem сохранитьКакToolStripMenuItem;
+        private ToolStripMenuItem ExitMenuItem;
     }
 }

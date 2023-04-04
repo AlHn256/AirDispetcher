@@ -7,12 +7,6 @@ namespace AirDispetcher.Model
     internal class FileWork
     {
         public static string? DataFile { get; set; }
-        private List<Passenger> PassengersList { get; set; }
-        private int LastPassengerId { get; set; }
-        private List<Flight> FlightsList { get; set; }
-        private int LastFlightsId { get; set; }
-        //private List<VTFlightPassenger> VTFlightPassengerList { get; set; }
-
 
         public FileWork()
         {
@@ -22,7 +16,7 @@ namespace AirDispetcher.Model
             }
         }
 
-        protected FileWork(string dataFile)
+        public FileWork(string dataFile)
         {
             DataFile = dataFile;
         }
@@ -60,25 +54,10 @@ namespace AirDispetcher.Model
             return dataFile;
         }
 
-        //private string SetInstance(string fileName)
-        //{
-        //    if(string.IsNullOrEmpty(DataFile))
-        //    {
-        //        DataFile = fileName;
-        //        //instance = new FileWork (fileName, passengersList);
-        //    }
-        //    return DataFile;
-        //}
-
-        //public List<Passenger> GetPassengersList()
-        //{
-        //    return PassengersList;
-        //}
-
         public MainData LoadeData()
         {
-            PassengersList = new List<Passenger>();
-            FlightsList = new List<Flight>();
+            List<Passenger> PassengersList = new List<Passenger>();
+            List<Flight> FlightsList = new List<Flight>();
             List<VTFlightPassenger> VTFlightPassengerList = new List<VTFlightPassenger>();
 
             if (string.IsNullOrEmpty(DataFile))
@@ -97,8 +76,6 @@ namespace AirDispetcher.Model
                         Worksheet ExcelWorksheet = (Worksheet)ExcelWorkBook.Worksheets.get_Item(Worksheet);
                         Microsoft.Office.Interop.Excel.Range ExcelRange = ExcelWorksheet.UsedRange;
 
-                        if (ExcelRange.Rows.Count != 1)
-                        {
                             for (int i = 1; i <= ExcelRange.Rows.Count; i++)
                             {
                                 switch (Worksheet)
@@ -134,7 +111,7 @@ namespace AirDispetcher.Model
                                         break;
                                 }
                             }
-                        }
+                        
                         releaseObject(ExcelRange);
                         releaseObject(ExcelWorksheet);
                         Marshal.ReleaseComObject(ExcelRange);
@@ -212,7 +189,7 @@ namespace AirDispetcher.Model
             return passengersList;
         }
 
-        public void SaveData(MainData mainData)
+        public bool SaveData(MainData mainData)
         {
             if(!string.IsNullOrEmpty(DataFile) && mainData != null)
             {
@@ -269,7 +246,11 @@ namespace AirDispetcher.Model
                 {
                     MessageBox.Show("Ошибка в SaveData" + ex.Message.ToString());
                 }
-
+                return true;
+            }
+            else 
+            { 
+                return false; 
             }
         }
 
@@ -289,12 +270,6 @@ namespace AirDispetcher.Model
             {
                 GC.Collect();
             }
-        }
-
-        internal void AddPassenger(string FIO, string passport)
-        {
-            LastPassengerId++;
-            PassengersList.Add(new Passenger(LastPassengerId, FIO, passport));
         }
     }
 }
