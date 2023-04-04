@@ -88,8 +88,13 @@
             }
         }
 
+        private bool CheckVFTCopy(VTFlightPassenger vtFlightPassenger)
+        {
+            return VTFlightPassengerList.Any(x => x.PassengerId == vtFlightPassenger.PassengerId && x.FlightId == vtFlightPassenger.FlightId);
+        }
         public void AddVTFlightPassenger(VTFlightPassenger vtFlightPassenger)
         {
+            if (!CheckVFTCopy(vtFlightPassenger))
             VTFlightPassengerList.Add(vtFlightPassenger);
         }
     }

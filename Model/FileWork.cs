@@ -1,30 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.Design;
+﻿using System.Runtime.InteropServices;
 using AirDispetcher.Data;
-using ExcelDataReader;
-using Microsoft.Office.Interop;
 using Microsoft.Office.Interop.Excel;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-
 
 namespace AirDispetcher.Model
 {
     internal class FileWork
     {
-        //private static FileWork instance;
-        //public string FileName { get; private set; }
         public static string? DataFile { get; set; }
         private List<Passenger> PassengersList { get; set; }
         private int LastPassengerId { get; set; }
         private List<Flight> FlightsList { get; set; }
         private int LastFlightsId { get; set; }
-        private List<VTFlightPassenger> VTFlightPassengerList { get; set; }
+        //private List<VTFlightPassenger> VTFlightPassengerList { get; set; }
 
 
         public FileWork()
@@ -44,7 +31,7 @@ namespace AirDispetcher.Model
         {
             string dataFile = string.Empty;
 
-            // Проверка есть ли ссылка на файл данных в настройках
+            // Проверка есть ли ссылка на даные в файле настроек
             FormSettings formSettings = new FormSettings();
             var formSettingsList = formSettings.GetFormSettingList();
             if (formSettingsList.Count() > 0)
@@ -88,16 +75,11 @@ namespace AirDispetcher.Model
         //    return PassengersList;
         //}
 
-        public List<Flight> GetFlightList()
-        {
-            return FlightsList;
-        }
-
         public MainData LoadeData()
         {
             PassengersList = new List<Passenger>();
             FlightsList = new List<Flight>();
-            VTFlightPassengerList = new List<VTFlightPassenger>();
+            List<VTFlightPassenger> VTFlightPassengerList = new List<VTFlightPassenger>();
 
             if (string.IsNullOrEmpty(DataFile))
             {
@@ -165,7 +147,6 @@ namespace AirDispetcher.Model
                     ExcelWorkBook.Close();
                     releaseObject(ExcelWorkBook);
                     Marshal.ReleaseComObject(ExcelWorkBook);
-                    //ExcelWorkBook.Close(true, null, null);
                     ExcelApp.Quit();
                     releaseObject(ExcelApp);
                     Marshal.ReleaseComObject(ExcelApp);
@@ -174,25 +155,6 @@ namespace AirDispetcher.Model
                 {
                     MessageBox.Show("Ошибка в SaveData" + ex.Message.ToString());
                 }
-
-
-                //if (PassengersList.Count == 0)
-                //{
-                //    LastPassengerId = 0;
-                //}
-                //else
-                //{
-                //    LastPassengerId = PassengersList.Max(x => x.Id);
-                //}
-
-                //if (FlightsList.Count == 0)
-                //{
-                //    LastFlightsId = 0;
-                //}
-                //else
-                //{
-                //    LastFlightsId = FlightsList.Max(x => x.Id);
-                //}
             }
             return new MainData(VTFlightPassengerList, FlightsList, PassengersList);
         }
@@ -250,9 +212,9 @@ namespace AirDispetcher.Model
             return passengersList;
         }
 
-        public void SaveData()
+        public void SaveData(MainData mainData)
         {
-            if(!string.IsNullOrEmpty(DataFile) && PassengersList != null)
+            if(!string.IsNullOrEmpty(DataFile) && mainData != null)
             {
                 try
                 {
@@ -263,32 +225,35 @@ namespace AirDispetcher.Model
                     Workbook ExcelWorkbook = ExcelApp.Workbooks.Add(System.Reflection.Missing.Value);
 
                     //Сохраняем виртуальню таблицу связи рейсов и пасажиров
+                    var VTFlightPassengerList = mainData.GetVTFlightPassengerList();
                     Worksheet ExcelWorksheet = ExcelWorkbook.Worksheets[1];
-                    for (int i = 1; i < VTFlightPassengerList.Count; i++)
-                        {
-                        ExcelWorksheet.Cells[i, 1] = VTFlightPassengerList[i].FlightId;
-                        ExcelWorksheet.Cells[i, 2] = VTFlightPassengerList[i].PassengerId;
+                    for (int i = 1; i < VTFlightPassengerList.Count + 1; i++)
+                    {
+                        ExcelWorksheet.Cells[i, 1] = VTFlightPassengerList[i - 1].FlightId;
+                        ExcelWorksheet.Cells[i, 2] = VTFlightPassengerList[i - 1].PassengerId;
                     }
 
                     //Сохраняем список рейсов
+                    var FlightsList = mainData.GetFlightList();
                     ExcelWorksheet = ExcelWorkbook.Worksheets[2];
-                    for(int i=1; i< FlightsList.Count; i++)
+                    for(int i=1; i< FlightsList.Count+1; i++)
                     {
-                        ExcelWorksheet.Cells[i, 1] = FlightsList[i].Id;
-                        ExcelWorksheet.Cells[i, 2] = FlightsList[i].Name.ToString();
-                        ExcelWorksheet.Cells[i, 3] = DateTime.Now.ToString();
-                        ExcelWorksheet.Cells[i, 4] = DateTime.Now.ToString();
-                        ExcelWorksheet.Cells[i, 5] = FlightsList[i].IsDelet;
+                        ExcelWorksheet.Cells[i, 1] = FlightsList[i - 1].Id;
+                        ExcelWorksheet.Cells[i, 2] = FlightsList[i - 1].Name.ToString();
+                        ExcelWorksheet.Cells[i, 3] = FlightsList[i - 1].DepartureTime.ToString();
+                        ExcelWorksheet.Cells[i, 4] = FlightsList[i - 1].ArrivalTime.ToString();
+                        ExcelWorksheet.Cells[i, 5] = FlightsList[i - 1].IsDelet;
                     }
 
                     //Сохраняем список пасажиров
+                    var PassengersList = mainData.GetPassengersList();
                     ExcelWorksheet = ExcelWorkbook.Worksheets[3];
-                    for (int i = 1; i < PassengersList.Count; i++)
+                    for (int i = 1; i < PassengersList.Count+1; i++)
                     {
-                        ExcelWorksheet.Cells[i, 1] = PassengersList[i].Id;
-                        ExcelWorksheet.Cells[i, 2] = PassengersList[i].FIO.ToString();
-                        ExcelWorksheet.Cells[i, 3] = PassengersList[i].Passport.ToString();
-                        ExcelWorksheet.Cells[i, 4] = PassengersList[i].IsDelet;
+                        ExcelWorksheet.Cells[i, 1] = PassengersList[i - 1].Id;
+                        ExcelWorksheet.Cells[i, 2] = PassengersList[i - 1].FIO.ToString();
+                        ExcelWorksheet.Cells[i, 3] = PassengersList[i - 1].Passport.ToString();
+                        ExcelWorksheet.Cells[i, 4] = PassengersList[i - 1].IsDelet;
                     }
 
                     ExcelApp.DisplayAlerts = false;

@@ -30,10 +30,10 @@
         {
             TabControl = new TabControl();
             SearchTabPage = new TabPage();
-            button1 = new Button();
-            textBox2 = new TextBox();
+            FlightDateTimePicker = new DateTimePicker();
+            SearchButton = new Button();
             label2 = new Label();
-            textBox1 = new TextBox();
+            FligtNumberTextBox = new TextBox();
             label1 = new Label();
             SearchDataGridView = new DataGridView();
             FlightsTabPage = new TabPage();
@@ -61,56 +61,58 @@
             TabControl.Location = new Point(4, 1);
             TabControl.Name = "TabControl";
             TabControl.SelectedIndex = 0;
-            TabControl.Size = new Size(793, 470);
+            TabControl.Size = new Size(571, 470);
             TabControl.TabIndex = 0;
             // 
             // SearchTabPage
             // 
-            SearchTabPage.Controls.Add(button1);
-            SearchTabPage.Controls.Add(textBox2);
+            SearchTabPage.Controls.Add(FlightDateTimePicker);
+            SearchTabPage.Controls.Add(SearchButton);
             SearchTabPage.Controls.Add(label2);
-            SearchTabPage.Controls.Add(textBox1);
+            SearchTabPage.Controls.Add(FligtNumberTextBox);
             SearchTabPage.Controls.Add(label1);
             SearchTabPage.Controls.Add(SearchDataGridView);
             SearchTabPage.Location = new Point(4, 24);
             SearchTabPage.Name = "SearchTabPage";
             SearchTabPage.Padding = new Padding(3);
-            SearchTabPage.Size = new Size(785, 442);
+            SearchTabPage.Size = new Size(563, 442);
             SearchTabPage.TabIndex = 0;
-            SearchTabPage.Text = "Поиск рейса по номеру";
+            SearchTabPage.Text = "Поиск пасажиров по номеру рейса";
             SearchTabPage.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // FlightDateTimePicker
             // 
-            button1.Location = new Point(412, 6);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 5;
-            button1.Text = "Поиск";
-            button1.UseVisualStyleBackColor = true;
+            FlightDateTimePicker.Location = new Point(299, 6);
+            FlightDateTimePicker.Name = "FlightDateTimePicker";
+            FlightDateTimePicker.Size = new Size(167, 23);
+            FlightDateTimePicker.TabIndex = 6;
             // 
-            // textBox2
+            // SearchButton
             // 
-            textBox2.Location = new Point(309, 6);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(88, 23);
-            textBox2.TabIndex = 4;
+            SearchButton.Location = new Point(482, 6);
+            SearchButton.Name = "SearchButton";
+            SearchButton.Size = new Size(75, 23);
+            SearchButton.TabIndex = 5;
+            SearchButton.Text = "Поиск";
+            SearchButton.UseVisualStyleBackColor = true;
+            SearchButton.Click += SearchButton_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(210, 9);
             label2.Name = "label2";
-            label2.Size = new Size(93, 15);
+            label2.Size = new Size(83, 15);
             label2.TabIndex = 3;
-            label2.Text = "Время вылета : ";
+            label2.Text = "Дата вылета : ";
             // 
-            // textBox1
+            // FligtNumberTextBox
             // 
-            textBox1.Location = new Point(101, 6);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(88, 23);
-            textBox1.TabIndex = 2;
+            FligtNumberTextBox.Location = new Point(101, 6);
+            FligtNumberTextBox.Name = "FligtNumberTextBox";
+            FligtNumberTextBox.Size = new Size(88, 23);
+            FligtNumberTextBox.TabIndex = 2;
+            FligtNumberTextBox.TextChanged += textBox1_TextChanged;
             // 
             // label1
             // 
@@ -127,7 +129,7 @@
             SearchDataGridView.Location = new Point(6, 35);
             SearchDataGridView.Name = "SearchDataGridView";
             SearchDataGridView.RowTemplate.Height = 25;
-            SearchDataGridView.Size = new Size(773, 401);
+            SearchDataGridView.Size = new Size(551, 401);
             SearchDataGridView.TabIndex = 0;
             // 
             // FlightsTabPage
@@ -137,7 +139,7 @@
             FlightsTabPage.Location = new Point(4, 24);
             FlightsTabPage.Name = "FlightsTabPage";
             FlightsTabPage.Padding = new Padding(3);
-            FlightsTabPage.Size = new Size(785, 442);
+            FlightsTabPage.Size = new Size(563, 442);
             FlightsTabPage.TabIndex = 1;
             FlightsTabPage.Text = "Рейсы";
             FlightsTabPage.UseVisualStyleBackColor = true;
@@ -155,10 +157,10 @@
             // FlightDataGridView
             // 
             FlightDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            FlightDataGridView.Location = new Point(6, 6);
+            FlightDataGridView.Location = new Point(4, 3);
             FlightDataGridView.Name = "FlightDataGridView";
             FlightDataGridView.RowTemplate.Height = 25;
-            FlightDataGridView.Size = new Size(773, 399);
+            FlightDataGridView.Size = new Size(556, 399);
             FlightDataGridView.TabIndex = 0;
             // 
             // PassengersTabPage
@@ -167,7 +169,7 @@
             PassengersTabPage.Controls.Add(PassenerDataGridView);
             PassengersTabPage.Location = new Point(4, 24);
             PassengersTabPage.Name = "PassengersTabPage";
-            PassengersTabPage.Size = new Size(785, 442);
+            PassengersTabPage.Size = new Size(563, 442);
             PassengersTabPage.TabIndex = 3;
             PassengersTabPage.Text = "Пассажиры";
             PassengersTabPage.UseVisualStyleBackColor = true;
@@ -192,7 +194,7 @@
             PassenerDataGridView.Location = new Point(4, 3);
             PassenerDataGridView.Name = "PassenerDataGridView";
             PassenerDataGridView.RowTemplate.Height = 25;
-            PassenerDataGridView.Size = new Size(778, 400);
+            PassenerDataGridView.Size = new Size(556, 400);
             PassenerDataGridView.TabIndex = 0;
             // 
             // RTB
@@ -200,7 +202,7 @@
             RTB.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             RTB.Location = new Point(4, 477);
             RTB.Name = "RTB";
-            RTB.Size = new Size(789, 36);
+            RTB.Size = new Size(567, 36);
             RTB.TabIndex = 1;
             RTB.Text = "";
             // 
@@ -208,7 +210,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 517);
+            ClientSize = new Size(578, 517);
             Controls.Add(RTB);
             Controls.Add(TabControl);
             Name = "Form1";
@@ -234,13 +236,13 @@
         private DataGridView PassenerDataGridView;
         private RichTextBox RTB;
         private Button AddPassenger;
-        private Button button1;
-        private TextBox textBox2;
+        private Button SearchButton;
         private Label label2;
-        private TextBox textBox1;
+        private TextBox FligtNumberTextBox;
         private Label label1;
         private DataGridView SearchDataGridView;
         private Button AddFlightButton;
         private DataGridView FlightDataGridView;
+        private DateTimePicker FlightDateTimePicker;
     }
 }

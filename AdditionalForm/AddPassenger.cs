@@ -26,7 +26,7 @@ namespace AirDispetcher
         {
             Random random = new Random();
             string FIO = SurnameTextBox.Text + " " + NameTextBox.Text + " " + PatronymicTextBox.Text;
-            if (string.IsNullOrEmpty(FIO.Trim())) FIO = "TestFIO" + random.Next(int.MaxValue).ToString();
+            if (string.IsNullOrEmpty(FIO.Trim())) FIO = "Random_FIO" + random.Next(int.MaxValue).ToString();
             string PassportNumber = string.IsNullOrEmpty(PassportNumberTextBox.Text.Trim()) ? random.Next(int.MaxValue).ToString() : PassportNumberTextBox.Text;
             passenger = new Passenger(0, FIO, PassportNumber);
             this.Hide();
