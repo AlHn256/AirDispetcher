@@ -22,7 +22,8 @@ namespace AirDispetcher.AdditionalForm
             }
         }
 
-        private List<Passenger> passengerList = new List<Passenger>();
+        public List<Passenger> PassengerList = new List<Passenger>();
+        private List<Passenger> SelectedPassengerList = new List<Passenger>();
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
@@ -31,12 +32,13 @@ namespace AirDispetcher.AdditionalForm
 
         private void SelectPassengersButton_Click(object sender, EventArgs e)
         {
-            SelectPassengers selectPassengers = new SelectPassengers();
+            SelectPassengers selectPassengers = new SelectPassengers(PassengerList);
+            //selectPassengers.PassengerList = PassengerList;
             selectPassengers.ShowDialog();
             if (selectPassengers.SelectedPassengerList != null)
             {
-                passengerList = selectPassengers.SelectedPassengerList;
-                NumberOfPassengerTextBox.Text = passengerList.Count.ToString();
+                SelectedPassengerList = selectPassengers.SelectedPassengerList;
+                NumberOfPassengerTextBox.Text = SelectedPassengerList.Count.ToString();
             }
         }
 
@@ -46,7 +48,7 @@ namespace AirDispetcher.AdditionalForm
             string FlightName = FlightNameTextBox.Text.Trim();
             if (string.IsNullOrEmpty(FlightName)) FlightName = "FlightName_" + random.Next(int.MaxValue).ToString();
 
-            flight = new Flight(0, FlightName, DepartureDateTimePicker.Value, ArrivalDateTimePicker.Value, false, passengerList);
+            flight = new Flight(0, FlightName, DepartureDateTimePicker.Value, ArrivalDateTimePicker.Value, false, SelectedPassengerList);
             this.Hide();
         }
     }

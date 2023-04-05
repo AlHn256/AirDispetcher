@@ -1,17 +1,14 @@
 ﻿using AirDispetcher.Data;
 using AirDispetcher.Data.DTO;
-using AirDispetcher.Model;
 
 namespace AirDispetcher.AdditionalForm
 {
     public partial class SelectPassengers : Form
     {
-        private FileWork FileWork = new FileWork();
-
-        public SelectPassengers()
-        {
+        public SelectPassengers(List<Passenger> passengersList)
+        {   
             InitializeComponent();
-            LoadPassergerList();
+            LoadPassergerList(passengersList);
         }
 
         private List<Passenger> passengersListVal;
@@ -30,18 +27,13 @@ namespace AirDispetcher.AdditionalForm
 
         public List<Passenger> SelectedPassengerList;
 
-        
-        private void LoadPassergerList()
+        private void LoadPassergerList(List<Passenger> passengersList)
         {
-            passengersListVal = FileWork.LoadPassengers();
-            if (passengersListVal.Count != 0)
-            {
-                passengersListVal = passengersListVal.Where(x => x.IsDelet == false).ToList();
-                List<PassengerDTO> passengerDTOList = new Mapping().GetPassengerDTO(passengersListVal);
-                BindingSource bind = new BindingSource { DataSource = passengerDTOList };
-                PassengerListView.DataSource = bind;
-                PassengerListView.AllowUserToAddRows = false;
-            }
+            passengersListVal = passengersList.Where(x => x.IsDelet == false).ToList();
+            List<PassengerDTO> passengerDTOList = new Mapping().GetPassengerDTO(passengersListVal);
+            BindingSource bind = new BindingSource { DataSource = passengerDTOList };
+            PassengerListView.DataSource = bind;
+            PassengerListView.AllowUserToAddRows = false;
         }
 
         private void SelectButton_Click(object sender, EventArgs e)

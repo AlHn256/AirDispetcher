@@ -30,6 +30,8 @@
         {
             TabControl = new TabControl();
             SearchTabPage = new TabPage();
+            label3 = new Label();
+            FlightNameTextBox = new TextBox();
             FlightDateTimePicker = new DateTimePicker();
             SearchButton = new Button();
             label2 = new Label();
@@ -47,7 +49,6 @@
             Menu = new ToolStripMenuItem();
             OpenFileToolStripMenuItem = new ToolStripMenuItem();
             SaveDataMenuItem = new ToolStripMenuItem();
-            сохранитьКакToolStripMenuItem = new ToolStripMenuItem();
             ExitMenuItem = new ToolStripMenuItem();
             TabControl.SuspendLayout();
             SearchTabPage.SuspendLayout();
@@ -73,6 +74,8 @@
             // 
             // SearchTabPage
             // 
+            SearchTabPage.Controls.Add(label3);
+            SearchTabPage.Controls.Add(FlightNameTextBox);
             SearchTabPage.Controls.Add(FlightDateTimePicker);
             SearchTabPage.Controls.Add(SearchButton);
             SearchTabPage.Controls.Add(label2);
@@ -86,6 +89,22 @@
             SearchTabPage.TabIndex = 0;
             SearchTabPage.Text = "Поиск пасажиров по номеру рейса";
             SearchTabPage.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(6, 40);
+            label3.Name = "label3";
+            label3.Size = new Size(42, 15);
+            label3.TabIndex = 8;
+            label3.Text = "Рейс : ";
+            // 
+            // FlightNameTextBox
+            // 
+            FlightNameTextBox.Location = new Point(101, 40);
+            FlightNameTextBox.Name = "FlightNameTextBox";
+            FlightNameTextBox.Size = new Size(192, 23);
+            FlightNameTextBox.TabIndex = 7;
             // 
             // FlightDateTimePicker
             // 
@@ -133,10 +152,10 @@
             // SearchDataGridView
             // 
             SearchDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            SearchDataGridView.Location = new Point(6, 35);
+            SearchDataGridView.Location = new Point(6, 69);
             SearchDataGridView.Name = "SearchDataGridView";
             SearchDataGridView.RowTemplate.Height = 25;
-            SearchDataGridView.Size = new Size(551, 401);
+            SearchDataGridView.Size = new Size(551, 367);
             SearchDataGridView.TabIndex = 0;
             // 
             // FlightsTabPage
@@ -153,9 +172,12 @@
             // 
             // AddFlightButton
             // 
+            AddFlightButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             AddFlightButton.Location = new Point(6, 408);
+            AddFlightButton.MaximumSize = new Size(150, 30);
+            AddFlightButton.MinimumSize = new Size(150, 30);
             AddFlightButton.Name = "AddFlightButton";
-            AddFlightButton.Size = new Size(153, 30);
+            AddFlightButton.Size = new Size(150, 30);
             AddFlightButton.TabIndex = 1;
             AddFlightButton.Text = "Добавить новый рейс";
             AddFlightButton.UseVisualStyleBackColor = true;
@@ -163,11 +185,12 @@
             // 
             // FlightDataGridView
             // 
+            FlightDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             FlightDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            FlightDataGridView.Location = new Point(4, 3);
+            FlightDataGridView.Location = new Point(6, 6);
             FlightDataGridView.Name = "FlightDataGridView";
             FlightDataGridView.RowTemplate.Height = 25;
-            FlightDataGridView.Size = new Size(556, 399);
+            FlightDataGridView.Size = new Size(555, 396);
             FlightDataGridView.TabIndex = 0;
             // 
             // PassengersTabPage
@@ -224,7 +247,7 @@
             // 
             // Menu
             // 
-            Menu.DropDownItems.AddRange(new ToolStripItem[] { OpenFileToolStripMenuItem, SaveDataMenuItem, сохранитьКакToolStripMenuItem });
+            Menu.DropDownItems.AddRange(new ToolStripItem[] { OpenFileToolStripMenuItem, SaveDataMenuItem });
             Menu.Name = "Menu";
             Menu.Size = new Size(53, 20);
             Menu.Text = "Меню";
@@ -242,12 +265,6 @@
             SaveDataMenuItem.Size = new Size(180, 22);
             SaveDataMenuItem.Text = "Сохранить";
             SaveDataMenuItem.Click += SaveDataMenuItem_Click;
-            // 
-            // сохранитьКакToolStripMenuItem
-            // 
-            сохранитьКакToolStripMenuItem.Name = "сохранитьКакToolStripMenuItem";
-            сохранитьКакToolStripMenuItem.Size = new Size(180, 22);
-            сохранитьКакToolStripMenuItem.Text = "Сохранить как";
             // 
             // ExitMenuItem
             // 
@@ -303,7 +320,8 @@
         private ToolStripMenuItem Menu;
         private ToolStripMenuItem OpenFileToolStripMenuItem;
         private ToolStripMenuItem SaveDataMenuItem;
-        private ToolStripMenuItem сохранитьКакToolStripMenuItem;
         private ToolStripMenuItem ExitMenuItem;
+        private Label label3;
+        private TextBox FlightNameTextBox;
     }
 }

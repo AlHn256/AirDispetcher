@@ -86,7 +86,7 @@ namespace AirDispetcher.Model
                                         VTFlightPassengerList.Add(new VTFlightPassenger()
                                         {
                                             FlightId = ((ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? 0 : (int)(ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2,
-                                            PassengerId = ((ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? 0 : (int)(ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2
+                                            PassengerId = ((ExcelRange.Cells[i, 2] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? 0 : (int)(ExcelRange.Cells[i, 2] as Microsoft.Office.Interop.Excel.Range).Value2
                                         });
                                         break;
                                     case 2:
@@ -137,59 +137,6 @@ namespace AirDispetcher.Model
                 }
             }
             return new MainData(VTFlightPassengerList, FlightsList, PassengersList);
-        }
-
-        public List<Passenger> LoadPassengers()
-        {
-            List<Passenger> passengersList = new List<Passenger>();
-            if (string.IsNullOrEmpty(DataFile))
-            {
-                MessageBox.Show("Ошибка в LoadPassengers: ошибка при загрузке данных!!!");
-            }
-            else
-            {
-                try
-                {
-                    Microsoft.Office.Interop.Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
-                    _Workbook ExcelWorkBook = ExcelApp.Workbooks.Open(DataFile, 0, true, 5, "", "", true, XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-                    Worksheet ExcelWorksheet = (Worksheet)ExcelWorkBook.Worksheets.get_Item(3);
-                    Microsoft.Office.Interop.Excel.Range ExcelRange = ExcelWorksheet.UsedRange;
-
-                    if (ExcelRange.Rows.Count != 1)
-                    {
-                        for (int i = 1; i <= ExcelRange.Rows.Count; i++)
-                        {
-                            string isDelet = ((ExcelRange.Cells[i, 4] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? "false" : (ExcelRange.Cells[i, 4] as Microsoft.Office.Interop.Excel.Range).Value2.ToString();
-                            passengersList.Add(
-                            new Passenger(
-                                ((ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? 0 : (int)(ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2,
-                                ((ExcelRange.Cells[i, 2] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? string.Empty : (ExcelRange.Cells[i, 2] as Microsoft.Office.Interop.Excel.Range).Value2.ToString(),
-                                ((ExcelRange.Cells[i, 3] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? string.Empty : (ExcelRange.Cells[i, 3] as Microsoft.Office.Interop.Excel.Range).Value2.ToString(),
-                                Boolean.Parse(isDelet)
-                                )
-                            );
-                        }
-                    }
-
-                    releaseObject(ExcelRange);
-                    releaseObject(ExcelWorksheet);
-                    Marshal.ReleaseComObject(ExcelRange);
-                    Marshal.ReleaseComObject(ExcelWorksheet);
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    ExcelWorkBook.Close();
-                    releaseObject(ExcelWorkBook);
-                    Marshal.ReleaseComObject(ExcelWorkBook);
-                    ExcelApp.Quit();
-                    releaseObject(ExcelApp);
-                    Marshal.ReleaseComObject(ExcelApp);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка в SaveData" + ex.Message.ToString());
-                }
-            }
-            return passengersList;
         }
 
         public bool SaveData(MainData mainData)

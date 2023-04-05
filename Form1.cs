@@ -38,6 +38,7 @@ namespace AirDispetcher
             BindingSource PassenerBind = new BindingSource { DataSource = PassengersList };
             PassenerDataGridView.DataSource = PassenerBind;
             PassenerDataGridView.AllowUserToAddRows = false;
+            PassenerDataGridView.Columns["Id"].Visible = false;
 
             ShowSearchPassenger(PassengersList);
         }
@@ -53,6 +54,7 @@ namespace AirDispetcher
         private void AddFlightButton_Click(object sender, EventArgs e)
         {
             AddFlight addFlight = new AddFlight();
+            addFlight.PassengerList = MainData.GetPassengersList();
             addFlight.ShowDialog();
             if (addFlight.flight != null)
             {
@@ -77,26 +79,20 @@ namespace AirDispetcher
         private void SearchButton_Click(object sender, EventArgs e)
         {
             List<Passenger> passengers = new List<Passenger>();
-            var flightIdList = MainData.GetFlightList().Where(x => x.DepartureTime == FlightDateTimePicker.Value && x.IsDelet == false).Select(x => x.Id).ToList();
-            if (flightIdList.Count > 0)
-            {
-                var PassengerIdList = MainData.GetVTFlightPassengerList().Where(x => flightIdList.Contains(x.FlightId)).Select(x => x.PassengerId).ToList();
-                passengers = MainData.GetPassengersList().Where(x => PassengerIdList.Contains(x.Id) && x.IsDelet == false).ToList();
-            }
-
-            //Если по дате вылета ни одного пасажира не найдено пробуем найти по номеру рейса если его конечно же ввели
-            if (passengers.Count == 0)
+            int flightId = -1;
+            //Сначала пробуем определить номер рейса
+            if (Int32.TryParse(FligtNumberTextBox.Text, out flightId))
             {
                 passengers = SerchPassengerByFlightNumber();
             }
-
-            if (passengers.Count == 0 && string.IsNullOrEmpty(FligtNumberTextBox.Text.Trim()))
-            {
-                RTB.Text = "Пасажиры не найдены!!!\n";
-            }
             else
             {
-                RTB.Text = string.Empty;
+                var flightIdList = MainData.GetFlightList().Where(x => x.DepartureTime == FlightDateTimePicker.Value && x.IsDelet == false).Select(x => x.Id).ToList();
+                if (flightIdList.Count > 0)
+                {
+                    var PassengerIdList = MainData.GetVTFlightPassengerList().Where(x => flightIdList.Contains(x.FlightId)).Select(x => x.PassengerId).ToList();
+                    passengers = MainData.GetPassengersList().Where(x => PassengerIdList.Contains(x.Id) && x.IsDelet == false).ToList();
+                }
             }
             ShowSearchPassenger(passengers);
         }
@@ -116,12 +112,20 @@ namespace AirDispetcher
                     if (flight != null)
                     {
                         FlightDateTimePicker.Value = flight.DepartureTime;
+                        FlightNameTextBox.Text = flight.Name;
                     }
-
                     var VTFlightPassengerList = MainData.GetVTFlightPassengerList().Where(x => x.FlightId == flightId).Select(x => x.PassengerId);
                     if (VTFlightPassengerList.Count() > 0)
                         passengerList = MainData.GetPassengersList().Where(x => VTFlightPassengerList.Contains(x.Id) && x.IsDelet == false).ToList();
                 }
+                else
+                {
+                    FlightNameTextBox.Text = "Рейс не найден!!!";
+                }
+            }
+            else
+            {
+                FlightNameTextBox.Text = "Рейс не найден!!!";
             }
 
             return passengerList;
@@ -146,19 +150,10 @@ namespace AirDispetcher
                 RTB.Text = "Информация сохранена\n";
         }
 
-        //Сохраняем информацию при закрытии формы
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            FileWork.SaveData(MainData);
-        }
-
-        private void ExitMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
+        //Меню загружаем новый файл
         private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RTB.Text = "";
             using (OpenFileDialog dialog = new OpenFileDialog()
             {
                 Filter = "Excel file|*.xlsx|Excel 97-2003|*.xls",
@@ -174,6 +169,17 @@ namespace AirDispetcher
                     ReloadDataGrid();
                 }
             }
+        }
+
+        //Сохраняем информацию при закрытии формы
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FileWork.SaveData(MainData);
+        }
+
+        private void ExitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
