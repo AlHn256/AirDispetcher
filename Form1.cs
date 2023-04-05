@@ -167,6 +167,8 @@ namespace AirDispetcher
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
+                    // Перед открытием другого файла, сохраняем инф. в старый файл
+                    FileWork.SaveData(MainData);
                     FileWork = new FileWork(dialog.FileName);
                     MainData = FileWork.LoadeData();
                     ReloadDataGrid();

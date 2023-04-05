@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using AirDispetcher.Data;
+using AirDispetcher.Enum;
 using Microsoft.Office.Interop.Excel;
 
 namespace AirDispetcher.Model
@@ -75,16 +76,17 @@ namespace AirDispetcher.Model
                     {
                         Worksheet ExcelWorksheet = (Worksheet)ExcelWorkBook.Worksheets.get_Item(Worksheet);
                         Microsoft.Office.Interop.Excel.Range ExcelRange = ExcelWorksheet.UsedRange;
-
+                        if (ExcelRange.Rows.Count != 1)
+                        {
                             for (int i = 1; i <= ExcelRange.Rows.Count; i++)
                             {
                                 switch (Worksheet)
                                 {
-                                    case 1:
+                                    case (int)ExelWorksheet.VirtualTable:
                                         VTFlightPassengerList.Add(new VTFlightPassenger()
                                         {
                                             FlightId = ((ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? 0 : (int)(ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2,
-                                            PassengerId = ((ExcelRange.Cells[i, 2] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? 0 : (int)(ExcelRange.Cells[i, 2] as Microsoft.Office.Interop.Excel.Range).Value2
+                                            PassengerId = ((ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2 == null) ? 0 : (int)(ExcelRange.Cells[i, 1] as Microsoft.Office.Interop.Excel.Range).Value2
                                         });
                                         break;
                                     case 2:
@@ -111,6 +113,7 @@ namespace AirDispetcher.Model
                                         break;
                                 }
                             }
+                        }
                         
                         releaseObject(ExcelRange);
                         releaseObject(ExcelWorksheet);
